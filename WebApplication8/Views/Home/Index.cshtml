@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <h2 id="welcomeMessage">Welcome to your ToDoApp</h2>
+</div>
+
+
+@section Scripts {
+    <script>
+
+        document.getElementById("welcomeMessage").style.opacity = 1;
+
+      
+        setTimeout(function () {
+            window.location.href = '@Url.Action("Index", "ToDoApp")';
+        }, 2000); 
+    </script>
+}
+
+
+<style>
+    #welcomeMessage {
+        opacity: 0;
+        transition: opacity 2s ease-in-out;
+    }
+</style>

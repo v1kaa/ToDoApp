@@ -1,0 +1,114 @@
+﻿@model List<ToDoModel>
+<div class="container mt-5">
+    <h1 class="text-center mb-4">ToDo List</h1>
+
+    <form asp-action="SaveChanges" method="post" class="mb-5">
+        <div class="table-responsive">
+            <table class="table table-striped table-hover shadow">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Task</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Count; i++)
+                    {
+                        <tr>
+                            <td>
+                                @if (Model[i].IsCompleted)
+                                {
+                                    <span class="text-muted text-decoration-line-through">@Model[i].Task</span>
+                                }
+                                else
+                                {
+                                    <span>@Model[i].Task</span>
+                                }
+                                <input type="hidden" name="tasks[@i].Id" value="@Model[i].Id" />
+                                <input type="hidden" name="tasks[@i].Task" value="@Model[i].Task" />
+                            </td>
+                            <td>
+                                <div class="form-check">
+                                    <input type="checkbox" name="tasks[@i].IsCompleted" value="true" class="form-check-input" @(Model[i].IsCompleted ? "checked" : "") />
+                                </div>
+                            </td>
+                            <td>
+                                <form asp-action="DeleteTask" method="post" style="display: inline;">
+                                    <input type="hidden" name="id" value="@Model[i].Id" />
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+    </form>
+
+    <div class="card shadow mt-4">
+
+        <div class="card-body">
+            <h3 class="card-title">Add New Task</h3>
+            <form asp-action="AddNewTask" method="post">
+                <div class="form-group mb-3">
+                    <label for="newTask" class="form-label">Task:</label>
+                    <input type="text" id="newTask" name="taskName" class="form-control" placeholder="Enter task name" required />
+                </div>
+                <button type="submit" class="btn btn-success">Add Task</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    .table thead th {
+        background-color: #343a40;
+        color: white;
+    }
+
+    .table tbody tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    .card {
+        border: none;
+        border-radius: 10px;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border: none;
+    }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+
+    .btn-success {
+        background-color: #28a745;
+        border: none;
+    }
+
+        .btn-success:hover {
+            background-color: #218838;
+        }
+
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+</style>
